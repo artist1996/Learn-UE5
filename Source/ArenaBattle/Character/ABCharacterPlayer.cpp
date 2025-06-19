@@ -10,6 +10,7 @@
 #include "ABCharacterControlData.h"
 #include "UI/ABHUDWidget.h"
 #include "CharacterStat/ABCharacterStatComponent.h"
+#include "Player/ABPlayerController.h"
 
 AABCharacterPlayer::AABCharacterPlayer()
 {
@@ -68,6 +69,18 @@ void AABCharacterPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	SetCharacterControl(CurrentCharacterControlType);
+}
+
+void AABCharacterPlayer::SetDead()
+{
+	Super::SetDead();
+
+	AABPlayerController* PlayerController = Cast<AABPlayerController>(GetController());
+	if (PlayerController)
+	{
+		DisableInput(PlayerController);
+	}
+
 }
 
 void AABCharacterPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
